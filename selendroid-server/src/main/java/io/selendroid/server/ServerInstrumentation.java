@@ -322,12 +322,15 @@ public class ServerInstrumentation extends Instrumentation implements ServerDeta
 
     private void startServer() {
       try {
-        // Get a wake lock to stop the cpu going to sleep
-        PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
-        wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "Selendroid");
-        try {
-          wakeLock.acquire();
-        } catch (SecurityException e) {
+        
+        if (this.args.isTakeWakeLock()) {
+          // Get a wake lock to stop the cpu going to sleep
+          PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+          wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "Selendroid");
+          try {
+            wakeLock.acquire();
+          } catch (SecurityException e) {
+          }
         }
 
         server.start();
