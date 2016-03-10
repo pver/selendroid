@@ -25,12 +25,14 @@ public class InstrumentationArguments {
   private final boolean loadExtensions;
   private final String bootstrapClassNames;
   private final String serverPort;
+  private final boolean takeWakeLock;
 
   public InstrumentationArguments(Bundle arguments) {
     mainActivityClassName = arguments.getString("main_activity");
     loadExtensions = Boolean.parseBoolean(arguments.getString("load_extensions"));
     bootstrapClassNames = arguments.getString("bootstrap");
     serverPort = arguments.getString("server_port");
+    takeWakeLock = Boolean.parseBoolean(arguments.getString("take_wake_lock"));
   }
 
   /** Full class name of the activity to start. */
@@ -51,5 +53,10 @@ public class InstrumentationArguments {
   /** The port at which the server should listen. */
   public String getServerPort() {
     return serverPort;
+  }
+  
+  /** Should we take a wake lock when starting the server. */
+  public boolean isTakeWakeLock() {
+    return takeWakeLock;
   }
 }
